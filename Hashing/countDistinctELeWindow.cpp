@@ -27,6 +27,8 @@ class Solution
                 mp[A[j]]++;
             v.push_back(mp.size());
         }
+
+        return v;
         
     }
 };
