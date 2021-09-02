@@ -17,6 +17,8 @@ struct Node
 class Solution
 {
     public:
+
+    //------------------------- T->O(n) but three traversal of bTree and extra space for vector-----------------
     bool findPath(Node* root, vector<Node*> &path, int n){
         if(!root) return 0;
         path.push_back(root);
@@ -28,7 +30,6 @@ class Solution
         return 0;
     }
 
-    //Function to return the lowest common ancestor in a Binary Tree.
     Node* lca(Node* root ,int n1 ,int n2 )
     {
         vector<Node*> path1, path2;
@@ -40,5 +41,40 @@ class Solution
                 break;
         }
         return path1[i-1];
+    }
+
+    //---- Better approach T->O(n) and single traversal and no extra space other than recursive call stack-----------------
+
+    Node* findLca(Node* root, int n1, int n2, bool &v1, bool &v2){
+        if(!root) return NULL;
+        if(root->data==n1){
+            v1 = true;
+            return root;
+        }
+        if(root->data==n2){
+            v2 = true;
+            return root;
+        }
+        Node* leftLca = findLca(root->left, n1, n2, v1, v2);
+        Node* rightLca = findLca(root->right, n1, n2, v1, v2);
+        if(leftLca && rightLca)
+            return root;
+        return leftLca ? leftLca : rightLca;
+    }
+
+    bool find(Node* root, int n){
+        if(!root) return 0;
+        if(root->data==n || find(root->left, n) || find(root->right, n))
+            return 1;
+        return 0;
+    }
+
+    Node* lca(Node* root ,int n1 ,int n2 )
+    {
+        bool v1 = false, v2 = false;
+        Node *res = findLca(root, n1, n2, v1, v2);
+        if(v1&&v2 || v1&&find(root, n2) || v2&&find(root, n1))
+            return res;
+        return NULL;
     }
 };
