@@ -13,6 +13,8 @@ struct TreeNode {
  
 class Solution {
 public:
+
+    // recursive approach T->O(t) and s->O(t)
     TreeNode* deleteNode(TreeNode* root, int key) {
         if(!root)
             return root;
@@ -43,4 +45,38 @@ public:
         }
         return root;
     }
+
+    // iterative approach T->O(t) and s->O(1)
+    TreeNode* deleteNode(TreeNode* root, int key){
+        TreeNode* parent = NULL;
+        TreeNode* curr = root;
+        while(curr && curr->val != key){
+            parent = curr;
+            if(curr->val < key) curr = curr->right;
+            else curr = curr->left;
+        }
+        if(!curr) return root;
+        if(!curr->left || !curr->right){
+            TreeNode* child = curr->left ? curr->left : curr->right;
+            if(!parent) root = child;
+            else if(parent->left == curr) parent->left = child;
+            else parent->right = child;
+        }
+        else{
+            TreeNode* temp = curr;
+            parent = curr;
+            curr = curr->right;
+            while(curr->left){
+                parent = curr;
+                curr = curr->left;
+            }
+            temp->val = curr->val;
+            if(parent->left == curr) parent->left = curr->right;
+            else parent->right = curr->right;
+            
+        }
+        delete(curr);
+        return root;
+    }
+
 };
