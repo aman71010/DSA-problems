@@ -21,4 +21,22 @@ public:
         }
         return nums[l];
     }
+
+    //T = O(logn) S = O(1)
+    int singleNonDuplicate(vector<int>& nums) {
+        int n = nums.size();
+        int l = 0, h = n-1, m, ans;
+        while(l<=h){
+            m = l + (h-l)/2;
+            if(m&1) m--;
+            if(m+1 < n && (nums[m] == nums[m+1])){
+                l = m+2;
+            }
+            else {
+                ans = nums[m];
+                h = m-1;
+            }
+        }
+        return ans;
+    }
 };
