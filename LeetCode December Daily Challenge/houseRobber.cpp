@@ -28,4 +28,32 @@ public:
         return solveMem(nums, 0, dp);
     }
 
+    //---------------------------------------------------DP(TABULATION)--------------------------------------------------------------
+    // t-> O(n) s-> O(n)
+
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n==1) return nums[0];
+        vector<int> dp(n, 0);
+        dp[1] = max(nums[0], nums[1]);
+        for(int i=2; i<n; i++){
+            dp[i] = max(dp[i-1], nums[i]+dp[i-2]);
+        }
+        return dp[n-1];
+    }
+
+    //---------------------------------------------------DP(TABULATION)--------------------------------------------------------------
+    // t-> O(n) s-> O(1)
+
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n==1) return nums[0];
+        int prev = 0, prev2 = 0, curr = 0;
+        for(int i=0; i<n; i++){
+            curr = max(prev, nums[i]+prev2);
+            prev2 = prev;
+            prev = curr;
+        }
+        return curr;
+    }
 };
