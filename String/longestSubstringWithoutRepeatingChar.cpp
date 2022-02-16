@@ -9,12 +9,9 @@ class Solution{
         for(int i=0; i<26; i++)
             index[i] = -1;
         while(end<s.length()){
-            if(index[s[end]-'a']==-1)
-                index[s[end]-'a'] = end;
-            else{
+            if(index[s[end]-'a']!=-1)
                 start = max(start, index[s[end]-'a']+1);
-                index[s[end]-'a'] = end;
-            }
+            index[s[end]-'a'] = end;
             if(end-start+1>maxLen)
                 maxLen = end-start+1;
             end++;
