@@ -1,60 +1,54 @@
 #include<bits\stdc++.h>
 using namespace std;
 
-class Solution 
-{
-    public:
-    bool validRow(vector<vector<int>> &mat, int r){
-        unordered_set<int> s;
-        for(int i=0; i<9; i++){
-            if(s.find(mat[r][i])!=s.end())
-                return false;
-            if(mat[r][i]!=0)
-                s.insert(mat[r][i]);
-        }
-        return true;
-    }
+class Solution{
+public:
 
-    bool validColumn(vector<vector<int>> &mat, int c){
-        unordered_set<int> s;
-        for(int i=0; i<9; i++){
-            if(s.find(mat[i][c])!=s.end())
-                return false;
-            if(mat[i][c]!=0)
-                s.insert(mat[i][c]);
-        }
-        return true;
-    }
-
-    bool valid3Box(vector<vector<int>> &mat, int startRow, int startCol){
-        unordered_set<int> s;
+    bool validBox(vector<vector<int>> &mat, int startRow, int startCol){
+        int box[9] = {0};
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                if(s.find(mat[startRow + i][startCol + j])!=s.end())
-                    return false;
-                if(mat[startRow + i][startCol + j]!=0)
-                    s.insert(mat[startRow + i][startCol + j]);
-            }
-        }
-        return true;
-    }
-
-    bool isValidConfig(vector<vector<int>> &mat, int r, int c){
-        return validRow(mat, r) && validColumn(mat, c) && valid3Box(mat, r, c);
-    }
-
-    int isValid(vector<vector<int>> mat){
-        for(int i=0; i<9; i++){
-            for(int j=0; j<9; j++){
-                if(!isValidConfig(mat, i, j))
-                    return 0;
+                if(mat[i+startRow][j+startCol]){
+                    if(box[mat[i+startRow][j+startCol]-1])
+                        return 0;
+                    else
+                        box[mat[i+startRow][j+startCol]-1] = 1;
+                }
             }
         }
         return 1;
     }
 
-};
+    bool validRow(vector<vector<int>> &mat, int i){
+        int row[9] = {0};
+        for(int j=0; j<9; j++){
+            if(row[mat[i][j]-1])
+                return 0;
+            else
+                row[mat[i][j]-1] = 1;
+        }
+    }
 
-int main(){
-    return 0;
-}
+    bool validCol(vector<vector<int>> &mat, int j){
+        int col[9] = {0};
+        for(int i=0; i<9; i++){
+            if(col[mat[i][j]-1])
+                return 0;
+            else
+                col[mat[i][j]-1] = 1;
+        }
+    }
+
+    int isValid(vector<vector<int>> mat){
+        for(int i=0; i<9; i++){
+            if(!validRow(mat, i)) return 0;
+            if(!validCol(mat, i)) return 0;
+        }
+        for(int i=0; i<=6; i+=3){
+            for(int j=0; j<=6; j+=3){
+                if(!validBox(mat, i, j)) return 0;
+            }
+        }
+        return 1;
+    }
+};
