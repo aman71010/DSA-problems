@@ -48,3 +48,28 @@ class Solution {
 		}
 };
 
+
+class Solution {
+public:
+    int numDecodings(string str) {
+        int n = str.length();
+        if(n==0 || str[0]=='0')
+            return 0;
+        vector<int> dp(n+1, -1);
+        dp[0] = 1;
+        dp[1] = 1;
+        return dp[n] = solve(str, n, dp);
+    }
+    int solve(string str, int n, vector<int>& dp){
+        if(dp[n]!=-1) return dp[n];
+        if(n==0 || n==1)
+            return dp[n];
+        int ans = 0;
+        if(str[n-1]>'0'){
+            ans = solve(str, n-1, dp);
+        }
+        if(str[n-2]=='1' || (str[n-2]=='2' && str[n-1]<='6'))
+            ans += solve(str, n-2, dp);
+        return dp[n] = ans;
+    }
+};
