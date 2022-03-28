@@ -12,38 +12,41 @@ struct ListNode {
 
 class Solution {
 public:
-    // T-> O(n) and S-> O(n\k)
+    // T-> O(n) and S-> O(n\k) recurrsion
     ListNode* reverseKGroup(ListNode* head, int k) {
         if(!head || k==1)
             return head;
-        ListNode *curr = head;
+        int n = getLen(head);
+        int grp = n/k;
+        return reverseKGroupHelper(head, k, grp);
+    }
+
+    ListNode* reverseKGroupHelper(ListNode* head, int k, int grp){
+        if(grp == 0) return head;
+        ListNode *prev = NULL, *curr = head;
+        int i=1;
+        while(curr && i<=k){
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            i++;
+        }
+        grp--;
+        head->next = reverseKGroupHelper(curr, k, grp);
+        return prev;
+    }
+
+    int getLen(ListNode *head){
         int n = 0;
+        ListNode *curr = head;
         while(curr){
             n++;
             curr = curr->next;
         }
-        int grp = n/k;
-        return reverse(head, k, grp-1);
+        return n;
     }
-
-    ListNode* reverse(ListNode* head, int k, int grp) {
-        if(!head)
-            return NULL;
-        ListNode *next = NULL, *prev = NULL, *curr = head;
-        int j = 0;
-        while(curr && j<k){
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-            j++;
-        }
-        if(next && grp--)
-            head->next = reverse(next, k, grp);
-        else
-            head->next = next;
-        return prev;
-    }
+    
     //-----------------------------------------------------------------------------------------------------
     // T-> O(n) and S-> O(k)const
     ListNode* reverseKGroup(ListNode* head, int k) {
@@ -87,3 +90,4 @@ public:
         return n;
     }
 };
+
