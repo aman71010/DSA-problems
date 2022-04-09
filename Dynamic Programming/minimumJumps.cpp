@@ -7,7 +7,7 @@ class Solution
     //Function to find minimum number of jumps to reach the end of the array.
     //recursion
     int minimumJumps(int arr[], int n){
-        if(arr[0] == 0)
+        if(n != 1 && arr[0] == 0)
             return -1;
         int res = minJumps(arr, n);
         return res==INT_MAX? -1: res;
@@ -34,7 +34,7 @@ class Solution
     //Function to find minimum number of jumps to reach the end of the array.
     //using dp
     int minimumJumps(int arr[], int n){
-        if(arr[0] == 0)
+        if(n != 1 && arr[0] == 0)
             return -1;
         int dp[n];
         dp[0] = 0;
@@ -59,10 +59,10 @@ class Solution
     //Function to find minimum number of jumps to reach the end of the array.
     //linear time
     int minimumJumps(int arr[], int n){
-        if(arr[0] == 0)
-            return -1;
         if(n==1)
             return 0;
+        if(arr[0] == 0)
+            return -1;
         int maxReach = arr[0];
         int step = arr[0];
         int jumps = 1; 
