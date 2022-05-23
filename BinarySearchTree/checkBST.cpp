@@ -26,3 +26,25 @@ class Solution
     }
 
 };
+
+class Solution {
+    public:
+    //----------t-> O(N) aux space-> O(H)--------
+    bool checkBst(Node *root, Node* &prev){
+        if(root){
+            if(!checkBst(root->left, prev))
+                return false;
+            if(prev && root->data <= prev->data)
+                return false;
+            prev = root;
+            return checkBst(root->right, prev);
+        }
+        return true;
+    }
+
+    bool isBST(Node* root) {
+        Node* prev = NULL;
+        return checkBst(root, prev);
+    }
+
+};
