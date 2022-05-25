@@ -27,6 +27,19 @@ struct TrieNode {
         }
         return node->isEndOfWord;
     }
+
+    void display(TrieNode* root, string& s){
+        if(root->isEndOfWord == true){
+            cout << s << endl;
+        }
+        for(int i=0; i<26; i++){
+            if(root->children[i]){
+                s += ('a'+i);
+                display(root->children[i], s);
+            }
+        }
+        s.pop_back();
+    }
 };
 
 class Solution{
