@@ -52,3 +52,36 @@ class Solution{
         return dp[n][k];
     }
 };
+
+// top down
+class Solution
+{
+    public:
+    //Function to find minimum number of attempts needed in 
+    //order to find the critical floor.
+    int eggDrop(int n, int k){
+        if(k==0 || k==1)
+            return k;
+        if(n==1)
+            return k;
+        vector<vector<int>> dp(n+1, vector<int> (k+1, -1));
+        solve(dp, n, k);
+        return dp[n][k];
+    }
+
+    int solve(vector<vector<int>> &dp, int n, int k){
+        if(dp[n][k] != -1)
+            return dp[n][k];
+        if(k==0 || k==1)
+            return dp[n][k] = k;
+        if(n==1)
+            return dp[n][k] = k;
+        dp[n][k] = INT_MAX;
+        int curr;
+        for(int x=1; x<=k; x++){
+            curr = 1+ max(solve(dp, n-1, x-1), solve(dp, n, k-x));
+            dp[n][k] = min(dp[n][k], curr);
+        }
+        return dp[n][k];
+    }
+};
