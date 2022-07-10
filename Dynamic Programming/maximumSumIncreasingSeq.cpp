@@ -1,10 +1,26 @@
 #include<bits\stdc++.h>
 using namespace std;
 
+// naive (recurrsion)
 class Solution{
 	public:
-	int maxSumIS(int arr[], int n)  
-	{  
+    int maxSumIS(int arr[], int n){  
+        return solve(arr, n, INT_MAX);
+	}  
+
+    int solve(int arr[], int n, int val){
+        if(n==0)
+            return 0;
+        if(arr[n-1]>val)
+            return solve(arr, n-1, val);
+        return max(solve(arr, n-1, val), arr[n-1]+solve(arr, n-1, arr[n-1]));
+    }
+};
+
+// dp
+class Solution{
+	public:
+	int maxSumIS(int arr[], int n){  
 	    int msis[n];
         for(int i=0; i<n; i++)
             msis[0] = arr[0];
