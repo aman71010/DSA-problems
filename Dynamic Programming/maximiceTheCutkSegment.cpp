@@ -8,21 +8,24 @@ class Solution
     //recursive
     int maximizeTheCuts(int n, int x, int y, int z)
     {
-        int ans = solve(n,x,y,z);
-        return ans<0 ? 0: ans;
+        int arr[3] = {x, y, z};
+        int ans = solve(n, arr);
+        return ans == INT_MIN ? 0: ans;
     }
-    int solve(int n, int x, int y, int z)
+
+    int solve(int n, int arr[])
     {
         if(n==0) 
             return 0;
-        int a = INT_MIN, b = INT_MIN, c = INT_MIN;
-        if(x<=n)
-            a = maximizeTheCuts(n-x, x, y, z);
-        if(y<=n)
-            b = maximizeTheCuts(n-y, x, y, z);
-        if(z<=n)
-            c = maximizeTheCuts(n-z, x, y, z);
-        return max(a, max(b,c)) + 1;
+        int res = INT_MIN;
+        for(int i=0; i<3; i++){
+            if(arr[i]<=n){
+                int subRes = solve(n-arr[i], arr);
+                if(subRes != INT_MIN && res < subRes+1)
+                    res = subRes+1;
+            }
+        }
+        return res;
     }
 };
 
@@ -38,7 +41,7 @@ class Solution
         for(int i=1; i<=n; i++)
             dp[i] = -1;
         solve(n,x,y,z,dp);
-        return dp[n]<0? 0: dp[n];
+        return dp[n]==INT_MIN? 0: dp[n];
     }
 
     int solve(int n, int x, int y, int z, int dp[]){
@@ -52,7 +55,8 @@ class Solution
                 b = solve(n-y, x, y, z, dp);
             if(z<=n)
                 c = solve(n-z, x, y, z, dp);
-            dp[n] = max(a,max(b,c)) + 1;
+            int subRes = max(a,max(b,c));
+            dp[n] = (subRes == INT_MIN) ? subRes: subRes+1;
         }
         return dp[n];
     }
@@ -68,6 +72,7 @@ class Solution
         int dp[n+1];
         dp[0] = 0;
         for(int i=1; i<=n; i++){
+            dp[i]=  INT_MIN;
             int a = INT_MIN, b = INT_MIN, c = INT_MIN;
             if(x<=i)
                 a = dp[i-x];
@@ -75,8 +80,9 @@ class Solution
                 b = dp[i-y];
             if(z<=i)
                 c = dp[i-z];
-            dp[i] = max(a,max(b,c)) + 1;
+            int subRes = max(a,max(b,c));
+            dp[i] = (subRes == INT_MIN) ? subRes: subRes+1;
         }
-        return dp[n]<0? 0: dp[n];
+        return dp[n]==INT_MIN? 0: dp[n];
     }
 };
