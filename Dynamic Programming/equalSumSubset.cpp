@@ -23,7 +23,7 @@ class Solution
             return false;
         if(a[n-1]>sum)
             return equalSumSubset(a, sum, n-1);
-        return equalSumSubset(a, sum-a[n-1], n-1);
+        return equalSumSubset(a, sum-a[n-1], n-1) || equalSumSubset(a, sum, n-1);
     }
 };
 
