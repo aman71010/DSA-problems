@@ -89,5 +89,43 @@ public:
         }
         return n;
     }
+
+    //-----------------------------------------------------------------------------------------------------
+    // T-> O(n) S-> const (Without stack)
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(!head || k==1)
+            return head;
+        int n = getLen(head);
+        int grp = n/k;
+        ListNode *curr = head, *prev = NULL, *prevTail = NULL;
+        while(curr && grp){
+            int i = 1;
+            ListNode *grpFirstNode = curr;
+            while(curr && i<=k){
+                ListNode* next = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = next;
+                i++;
+            }
+            if(!prevTail)
+                head = prev;
+            else
+                prevTail->next = prev;
+            prevTail = grpFirstNode;
+            grp--;
+        }
+        prevTail->next = NULL;
+        return head;
+    }
+
+    int getLen(ListNode *head){
+        int n = 0;
+        while(head){
+            n++;
+            head = head->next;
+        }
+        return n;
+    }
 };
 
