@@ -78,3 +78,39 @@ class Solution
         return NULL;
     }
 };
+
+class Solution{
+    public:
+    void check(Node* root ,int n1 ,int n2, bool &v1, bool &v2){
+        if(!root) return;
+        if(root->data == n1)
+            v1 = 1;
+        else if(root->data == n2)
+            v2 = 1;
+        check(root->left, n1, n2, v1, v2);
+        check(root->right, n1, n2, v1, v2);
+    }
+
+    Node* findLca(Node* root, int n1, int n2){
+        if(!root) return NULL;
+        if(root->data==n1)
+            return root;
+        if(root->data==n2)
+            return root;
+        Node* leftLca = findLca(root->left, n1, n2);
+        Node* rightLca = findLca(root->right, n1, n2);
+        if(leftLca && rightLca)
+            return root;
+        return leftLca ? leftLca : rightLca;
+    }
+
+    Node* lca(Node* root ,int n1 ,int n2 ){
+        bool v1 = false, v2 = false;
+        check(root, n1, n2, v1, v2);
+        if(!v1 && !v2)
+            return NULL;
+        if(!v1 || !v2)
+            return NULL;
+        return findLca(root, n1, n2);
+    }
+};
