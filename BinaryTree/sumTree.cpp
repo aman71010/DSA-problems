@@ -66,3 +66,24 @@ class Solution
         return 0;
     }
 };
+
+class Solution{
+    public:
+    bool isSumTree(Node* root){
+        return solve(root) == INT_MAX? 0: 1;
+    }
+    
+    int solve(Node* root){
+        if(!root) return 0;
+        if(!root->left && !root->right) return root->data;
+        int left = solve(root->left);
+        if(left == INT_MAX)
+            return INT_MAX;
+        int right = solve(root->right);
+        if(right == INT_MAX)
+            return INT_MAX;
+        if(left+right != root->data)
+            return INT_MAX;
+        return 2*root->data;
+    }
+};
