@@ -140,6 +140,8 @@ class Solution{
             }
             else if(l->data + r->data == target && l != r)
                 return 1;
+            else
+                return 0;
         }
         return 0;
     }
