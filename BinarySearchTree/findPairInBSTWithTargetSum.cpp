@@ -109,3 +109,40 @@ class Solution
         }
     }
 };
+
+
+// ---------------------without extra space other than O(H)-----------------------------------
+// T-> O(N) S-> O(H)
+class Solution{
+  public:
+    int isPairPresent(struct Node *root, int target){
+        if(!root) return 0;
+        stack<Node*> st1, st2;
+        Node *c1, *c2;
+        c1 = c2 = root;
+        while((c1||!st1.empty()) && (c2||!st2.empty())){
+            while(c1){
+                st1.push(c1);
+                c1 = c1->left;
+            }
+            while(c2){
+                st2.push(c2);
+                c2 = c2->right;
+            }
+            Node* l = st1.top();
+            Node* r = st2.top();
+            if(l->data + r->data < target){
+                st2.pop();
+                if(r->left)
+                    c2 = r->left;
+            } else if(l->data + r->data > target){
+                st1.pop();
+                if(l->right)
+                    c1 = l->right;
+            }
+            else
+                return 1;
+        }
+        return 0;
+    }
+};
