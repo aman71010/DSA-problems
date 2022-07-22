@@ -131,16 +131,14 @@ class Solution{
             }
             Node* l = st1.top();
             Node* r = st2.top();
-            if(l->data + r->data < target){
+            if(l->data + r->data > target){
                 st2.pop();
-                if(r->left)
-                    c2 = r->left;
-            } else if(l->data + r->data > target){
+                c2 = r->left;
+            } else if(l->data + r->data < target){
                 st1.pop();
-                if(l->right)
-                    c1 = l->right;
+                c1 = l->right;
             }
-            else
+            else if(l->data + r->data == target && l != r)
                 return 1;
         }
         return 0;
