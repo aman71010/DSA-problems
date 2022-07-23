@@ -68,3 +68,56 @@ class Solution {
         return res;
     }
 };
+
+class Solution
+{
+    public:
+    vector<int> merge(Node *root1, Node *root2){
+        vector<int> res;
+        stack<Node*> st1, st2;
+        Node *c1 =root1, *c2 = root2;
+        while((c1||!st1.empty()) || (c2||!st2.empty())){
+            while(c1){
+                st1.push(c1);
+                c1 = c1->left;
+            }
+            while(c2){
+                st2.push(c2);
+                c2 = c2->left;
+            }
+            if(!st1.empty() && !st2.empty()){
+                Node* n1 = st1.top();
+                Node* n2 = st2.top();
+                if(n1->data < n2->data){
+                    res.push_back(n1->data);
+                    st1.pop();
+                    c1 = n1->right;
+                } else if(n1->data > n2->data){
+                    res.push_back(n2->data);
+                    st2.pop();
+                    c2 = n2->right;
+                } else{
+                    res.push_back(n1->data);
+                    res.push_back(n2->data);
+                    st1.pop();
+                    st2.pop();
+                    c1 = n1->right;
+                    c2 = n2->right;
+                }
+            }
+            else if(!st1.empty()){
+                Node* n1 = st1.top();
+                st1.pop();
+                res.push_back(n1->data);
+                c1 = n1->right;
+            }
+            else if(!st2.empty()){
+                Node* n2 = st2.top();
+                st2.pop();
+                res.push_back(n2->data);
+                c2 = n2->right;
+            }
+        }
+        return res;
+    }
+};
