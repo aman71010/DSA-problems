@@ -24,7 +24,7 @@ bool isEmpty(stack<int>& s){
 }
 
 int pop(stack<int>& s){
-	int t = s.top()%d;
+	int t = s.top()/d;
     s.pop();
     return t;
 }
