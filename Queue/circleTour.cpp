@@ -6,25 +6,50 @@ struct petrolPump {
     int distance;
 };
 
-class Solution 
-{
+
+// T-> O(n^2) and S->O(1)
+class Solution{
+  public:
+    int tour(petrolPump p[],int n){
+        for(int i=0; i<n; i++){
+            int currP = p[i].petrol;
+            if(currP < p[i].distance)
+                continue;
+            else
+                currP -= p[i].distance;
+            int j = (i+1)%n;
+            while(j != i){
+                currP += p[j].petrol;
+                if(currP < p[j].distance)
+                    break;
+                else
+                    currP -= p[j].distance;
+                j = (j+1)%n;
+            }
+            if(j == i)
+                return i;
+        }
+        return -1;
+    }
+};
+
+// T-> O(n) and S->O(1)
+class Solution {
     public:
-    //Function to find starting point where the truck can start to get through
-    //the complete circle without exhausting its petrol in between.
-    int tour(petrolPump p[],int n)
-    {
-       int start = 0, end = 1;
-       int curr_petrol = (p[start].petrol - p[start].distance);
-       while(start!=end || curr_petrol<0){
-           while(curr_petrol<0 && start!=end){
-               curr_petrol -= (p[start].petrol - p[start].distance);
-               start = (start+1)%n;
-               if(start==0) return -1;
-           }
-           curr_petrol += (p[end].petrol - p[end].distance);
-           end = (end+1)%n;
-       }
-       return start;
+    int tour(petrolPump p[],int n){
+        int start = 0, lack = 0;
+        int capPet = 0;
+        for (int i = 0; i < n; i++) {
+            capPet += (p[i].petrol - p[i].distance);
+            if (capPet < 0) {
+                start = i + 1;
+                lack += capPet;
+                capPet = 0;
+            }
+        }
+        if(capPet + lack >= 0)
+            return start;
+        return -1;
     }
 };
 
