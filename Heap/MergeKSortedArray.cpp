@@ -13,7 +13,7 @@ class Solution
 
 
     //Function to merge k sorted arrays.
-    //-----------t = O(k*2log(k)) s = log(k) -----------------------------------
+    //-----------t = O(k*2log(k)) s = O(k) -----------------------------------
     //using heap
     vector<int> mergeKArrays(vector<vector<int>> arr, int K)
     {
