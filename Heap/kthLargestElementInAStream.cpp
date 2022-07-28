@@ -5,23 +5,20 @@ class Solution
 {
     public:
 
-    //--------------t = O(nlogn) aux = O(n)-------------------
+    //--------------t = O(nlogn) aux = O(K)-------------------
     vector<int> kthLargest(int k, int arr[], int n) {
         vector<int> res;
         priority_queue<int, vector<int>, greater<int>>minHeap;
-        int i=0; 
-        while(i+1<k){
+        for(int i=1; i<k; i++){
             res.push_back(-1);
-            minHeap.push(arr[i]);
-            i++;
+            minHeap.push(arr[i-1]);
         }
-        minHeap.push(arr[i]);
+        minHeap.push(arr[k-1]);
         res.push_back(minHeap.top());
-        i++;
-        for(int j=i; j<n; j++){
-            if(arr[j] > minHeap.top()){
+        for(int i=k; i<n; i++){
+            if(arr[i] > minHeap.top()){
                 minHeap.pop();
-                minHeap.push(arr[j]);
+                minHeap.push(arr[i]);
             }
             res.push_back(minHeap.top());
         }
