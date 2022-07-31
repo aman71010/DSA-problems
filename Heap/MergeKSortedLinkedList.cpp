@@ -23,27 +23,23 @@ class Solution
 {
     public:
     //Function to merge K sorted linked list.
-    //-----------t = O(Nlog(k)) s = log(k)  where N = k*n-----------------------------------
-    Node * mergeKLists(Node *arr[], int K)
-    {
-        Node *curr = NULL, *head = NULL;
+    //-----------t = O(Nlog(k)) s = O(k)  where N = k*n-----------------------------------
+    Node * mergeKLists(Node *arr[], int K){
+        Node *prev = NULL, *head = NULL;
         priority_queue<Node*, vector<Node*>, compare> minHeap;
         for(int i=0; i<K; i++){
             minHeap.push(arr[i]);
         }
         while(!minHeap.empty()){
-            Node* x = minHeap.top();
+            Node* curr = minHeap.top();
             minHeap.pop();
-            if(curr == NULL){
-                curr = x;
+            if(head == NULL)
                 head = curr;
-            }
-            else{
-                curr->next = x;
-                curr = curr->next;
-            }
-            if(x->next){
-                minHeap.push(x->next);
+            else
+                prev->next = curr;
+            prev = curr;
+            if(curr->next){
+                minHeap.push(curr->next);
             }
         }
         return head;
