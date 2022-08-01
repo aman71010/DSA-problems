@@ -5,7 +5,7 @@ class Solution
 {
     public:
 
-    //--------------t = O(nlogn) aux = O(K)-------------------
+    //--------------t = O(nlogk) aux = O(K)-------------------
     vector<int> kthLargest(int k, int arr[], int n) {
         vector<int> res;
         priority_queue<int, vector<int>, greater<int>>minHeap;
