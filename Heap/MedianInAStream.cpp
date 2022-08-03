@@ -1,6 +1,10 @@
 #include<bits\stdc++.h>
 using namespace std;
 
+
+//brute force use insertion sort T->O(n^2) S->O(1
+
+//T->O(nlogn) S->O(n)
 class Solution 
 {
     public:
