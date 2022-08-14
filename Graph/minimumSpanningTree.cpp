@@ -65,10 +65,10 @@ class Solution{
         int count = V-1;
         DSU obj(V);
         for(int i=0; i<edges.size(); i++){
-            int x = obj.find(edges[i].src);
-            int y = obj.find(edges[i].des);
-            if(x!=y){
-                obj.union_(x, y);
+            int subsetSrc = obj.find(edges[i].src);
+            int subsetDes = obj.find(edges[i].des);
+            if(subsetSrc!=subsetDes){
+                obj.union_(subsetSrc, subsetDes);
                 res += edges[i].edgeWt;
                 count--;
                 if(count == 0)
