@@ -62,7 +62,7 @@ class Solution
     //Function to check whether a set of numbers can be partitioned into 
     //two subsets such that the sum of elements in both subsets is same.
 
-    //dp bottom up T->O(sum*N) S-> O(sum*N)
+    //dp bottom up T->O(sum*N)
     bool findPartition(int a[], int n){
         int sum = 0;
         for(int i=0; i<n; i++)
