@@ -66,3 +66,72 @@ int pop(stack<int>& s){
 int getMin(stack<int>& s){
 	return s.top()%d;
 }
+
+//----------------------------- not using stack ------------------------
+
+struct Data{
+    int val;
+    int minVal;
+};
+
+class Stack{
+    private:
+        int capacity;
+        Data* arr;
+        int size;
+    public:
+        Stack(int capcity){
+            this->capacity = capacity;
+            arr = new Data[capacity];
+            size = 0;
+        }
+
+        ~Stack(){
+            delete[] arr;
+        }
+
+        void push(int val){
+            if(size == capacity){
+                cout << "overflow" << endl;
+                return;
+            }
+            arr[size].val = val;
+            if(isEmpty())
+                arr[size].minVal = val;
+            else{
+                int prevMin = getMinimum();
+                int currMin = min(prevMin, val);
+                arr[size].minVal = currMin;
+            }
+            size++;
+        }
+
+        int top(){
+            if(isEmpty()){
+                cout << "Stack is Empty" << endl;
+                return INT_MAX;
+            }
+            return arr[size-1].val;
+        }
+
+        void pop(){
+            if(isEmpty()){
+                cout << "Stack is Empty" << endl;
+                return;
+            }
+            size--;
+        }
+
+        bool isEmpty(){
+            return size == 0;
+        }
+
+        int getMinimum(){
+            if(isEmpty()){
+                cout << "Stack is Empty" << endl;
+                return INT_MAX;
+            }
+            return arr[size-1].minVal;
+        }
+};
+
