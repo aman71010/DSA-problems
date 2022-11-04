@@ -3,15 +3,14 @@ using namespace std;
 
 int partition(int arr[], int l, int h){
     int pivort = arr[h];
-    int j = -1;
-    for(int i=0; i<h; i++){
+    int j = l-1;
+    for(int i=l; i<=h; i++){
         if(arr[i]<=pivort){
             j++;
             swap(arr[i],arr[j]);
         }
     }
-    swap(arr[j+1],arr[h]);
-    return j+1;
+    return j;
 }
 
 void quickSort(int arr[], int l, int h){
